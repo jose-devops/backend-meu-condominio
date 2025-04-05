@@ -14,10 +14,17 @@ public class UsuarioModel {
 
     private String email;
     private String senha;
-    private Boolean ativo; // Considerando que "ativo" controlará o status do usuário
+    private Boolean ativo; // Indica se o usuário está ativo
     private String observacao;
 
     @Enumerated(EnumType.STRING)
-    private TipoAcesso tipoAcesso;  // Renomeando para 'TipoAcesso' seguindo convenção Java
+    private TipoAcesso tipoAcesso;  // Enum com valores, por exemplo, PROPRIETARIO e INQUILINO
 
+    // Relacionamento OneToOne com o perfil Inquilino
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private InquilinoModel inquilino;
+
+    // Relacionamento OneToOne com o perfil Proprietário
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private ProprietarioModel proprietario;
 }

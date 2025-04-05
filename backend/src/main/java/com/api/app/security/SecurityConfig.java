@@ -3,6 +3,7 @@ package com.api.app.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,8 +21,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()  // Desabilita CSRF (não necessário para JWT)
                 .authorizeHttpRequests()  // Usando o método correto para versões 6.x
-                .requestMatchers("/usuario/cadastrar", "/usuario/login").permitAll()  // Permite acesso sem autenticação para cadastrar e login
+                .requestMatchers("/usuario/cadastrar", "/usuario/login").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/usuario/alterar/**").hasAnyRole("PROPRIETARIO", "INQUILINO")// Permite acesso sem autenticação para cadastrar e login
                 .requestMatchers("/api/proprietario/**").hasRole("PROPRIETARIO")   // Restringe para o Proprietário
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+
                 .requestMatchers("/api/inquilino/**").hasRole("INQUILINO")         // Restringe para o Inquilino
                 .anyRequest().authenticated()  // Exige autenticação para outras rotas
                 .and()
