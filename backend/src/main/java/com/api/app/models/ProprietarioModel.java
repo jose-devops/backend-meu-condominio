@@ -12,12 +12,21 @@ public class ProprietarioModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private  String email;
-    private String cnpj;
+    private String nome;
     private String razaoSocial;
-    // Outros atributos específicos de proprietário
 
-    @OneToOne
+    @Enumerated(EnumType.STRING)
+    private TipoProprietario tipo;
+
+    private String cpfCnpj;
+    private String telefonePrincipal;
+    private String telefoneSecundario;
+    private String email;
+    private String observacao;
+
+
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
     private UsuarioModel usuario;
 }
