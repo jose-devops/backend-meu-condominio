@@ -15,6 +15,8 @@ public class JwtUtil {
 
     private final String SECRET_KEY = "segredo_super_secreto"; // Você pode pegar do application.properties se preferir
 
+
+
     // Extrai o nome de usuário (subject) do token
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
