@@ -74,19 +74,27 @@ public class ProprietarioController {
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<String> deletarProprietario(@PathVariable Long id) {
-        Optional<ProprietarioModel> proprietarioOpt = proprietarioRepository.findById(id);
+        Optional<UsuarioModel> usuarioOpt = usuarioRepository.findById(id);
 
-        if (proprietarioOpt.isPresent()) {
-            ProprietarioModel proprietario = proprietarioOpt.get();
+        if (usuarioOpt.isPresent()) {
+            UsuarioModel usuario = usuarioOpt.get();
+
+            // Aqui buscamos o Proprietário relacionado a este Usuário
+            ProprietarioModel proprietario = proprietarioRepository.findByUsuario(usuario)
+                    .orElseThrow(() -> new RuntimeException("Proprietário não encontrado"));
 
             // Deletar o proprietário, o que automaticamente vai deletar o usuário associado
             proprietarioRepository.delete(proprietario);
 
+            // Agora deletamos o usuário
+            usuarioRepository.delete(usuario);
+
             return ResponseEntity.ok("Proprietário e usuário deletados com sucesso!");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Proprietário não encontrado!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado!");
         }
     }
+
 
     @PutMapping("/alterar/{id}")
     public ResponseEntity<ProprietarioModel> alterarProprietario(@PathVariable Long id,
