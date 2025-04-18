@@ -1,5 +1,6 @@
 package com.api.app.services;
 
+import com.api.app.dtos.UsuarioDTO;
 import com.api.app.models.UsuarioModel;
 import com.api.app.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -29,8 +31,19 @@ public class UsuarioService {
     }
 
     // Método para listar todos os usuários
-    public List<UsuarioModel> listarTodos() {
-        return usuarioRepository.findAll();
+    public List<UsuarioDTO> listarTodos() {
+        List<UsuarioModel> usuarios = usuarioRepository.findAll();
+
+        // Converte a lista de UsuarioModel para UsuarioDTO
+        return usuarios.stream()
+                .map(usuario -> new UsuarioDTO(
+                        usuario.getId(),
+                        usuario.getEmail(),
+                        usuario.getAtivo(),
+                        usuario.getTipoAcesso().toString(),
+                        usuario.getObservacao()
+                ))
+                .collect(Collectors.toList());
     }
 
     // Método para deletar um usuário pelo ID
@@ -59,4 +72,6 @@ public class UsuarioService {
             throw new RuntimeException("Usuário não encontrado!");
         }
     }
+
+
 }
