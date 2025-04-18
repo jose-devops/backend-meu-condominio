@@ -2,6 +2,7 @@ package com.api.app.controllers;
 
 import com.api.app.dtos.LoginRequest;
 import com.api.app.dtos.LoginResponse;
+import com.api.app.dtos.UsuarioDTO;
 import com.api.app.models.TipoAcesso;
 import com.api.app.models.UsuarioModel;
 import com.api.app.repositories.UsuarioRepository;
@@ -54,9 +55,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<UsuarioModel>> listarUsuarios() {
-        List<UsuarioModel> usuarios = usuarioService.listarTodos();
-        return ResponseEntity.ok(usuarios);
+    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
+        List<UsuarioDTO> usuariosDTO = usuarioService.listarTodos();
+        return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/deletar/{id}")
