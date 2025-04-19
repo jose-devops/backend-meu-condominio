@@ -1,6 +1,5 @@
 package com.api.app.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,11 +22,11 @@ public class UsuarioModel {
 
     // Relacionamento OneToOne com o perfil Inquilino
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private InquilinoModel inquilino;
+    private MoradorModel morador;
 
     // Relacionamento OneToOne com o perfil Proprietário
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private ProprietarioModel proprietario;
+    private ProprietarioModel proprietarip;
 
 
 

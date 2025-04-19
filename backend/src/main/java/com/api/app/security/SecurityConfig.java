@@ -22,12 +22,12 @@ public class SecurityConfig {
         http.csrf().disable()  // Desabilita CSRF (não necessário para JWT)
                 .authorizeHttpRequests()  // Usando o método correto para versões 6.x
                 .requestMatchers("/usuario/cadastrar", "/usuario/login").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/usuario/alterar/**").hasAnyRole("PROPRIETARIO", "INQUILINO")// Permite acesso sem autenticação para cadastrar e login
+                .requestMatchers(HttpMethod.PUT, "/usuario/alterar/**").hasAnyRole("PROPRIETARIO", "MORADOR")// Permite acesso sem autenticação para cadastrar e login
                 .requestMatchers("/api/proprietario/**").hasRole("PROPRIETARIO")   // Restringe para o Proprietário
                 .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
 
 
-                .requestMatchers("/api/inquilino/**").hasRole("INQUILINO")         // Restringe para o Inquilino
+                .requestMatchers("/api/morador/**").hasRole("MORADOR")         // Restringe para o Inquilino
                 .anyRequest().authenticated()  // Exige autenticação para outras rotas
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);  // Sem sessões (usando JWT)
