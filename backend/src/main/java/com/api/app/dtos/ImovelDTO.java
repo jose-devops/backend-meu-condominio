@@ -8,6 +8,8 @@ public class ImovelDTO {
 
     private Long id;
 
+    private String descricao;
+
     private Long proprietarioId;
 
     private Long moradorId;

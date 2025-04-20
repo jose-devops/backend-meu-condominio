@@ -23,6 +23,7 @@ public class ImovelModel {
     @JoinColumn(name = "inquilino_id", nullable = true)
     private MoradorModel morador;
 
+    private String descricao;
 
     private String endereco;
 

@@ -70,7 +70,7 @@ public class ImovelService {
                     .orElseThrow(() -> new RuntimeException("Morador não encontrado"));
             imovel.setMorador(morador);
         }
-
+        imovel.setDescricao(dto.getDescricao());
         imovel.setEndereco(dto.getEndereco());
         imovel.setCep(dto.getCep());
         imovel.setUf(dto.getUf());

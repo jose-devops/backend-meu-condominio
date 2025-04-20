@@ -2,7 +2,7 @@ package com.api.app.models;
 
 public enum StatusImovel {
     ALUGADO,
-    INDISPONOVEL,
+    INDISPONIVEL,
     MANUTENCAO,
     VENDIDO
 }
